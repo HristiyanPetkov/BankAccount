@@ -29,7 +29,7 @@ class Client():
                 self.num_accounts = len(self.account_dict[self.client_id])
                 self.account_id.extend(self.account_dict[self.client_id])
                 self.bank_accounts.extend(self.account_dict[self.client_id])
-            else:
+            elif self.client_id == None:
                 self.client_id = ''
                 for i in range(8):
                     self.client_id += random.choice(code)
@@ -37,15 +37,27 @@ class Client():
                 self.account_dict.update({self.client_id : i for i in self.bank_accounts})
                 with open(self.account_path, "a") as file:
                     yaml.dump({self.client_id : [i for i in self.bank_accounts]}, file)
+            else:
+                self.add_bank_account(balance)
+                self.account_dict.update({self.client_id : i for i in self.bank_accounts})
+                with open(self.account_path, "a") as file:
+                    yaml.dump({self.client_id : [i for i in self.bank_accounts]}, file)
 
         else:
-            self.add_bank_account(balance)  
-            self.client_id = ""
-            for i in range(8):
-                self.client_id += random.choice(code)
-            self.account_dict = {self.client_id:self.bank_accounts[0]}
-            with open(account_path, "w") as fw:
-                yaml.dump(self.account_dict, fw)
+            if client_id == None:
+                self.add_bank_account(balance)  
+                self.client_id = ""
+                for i in range(8):
+                    self.client_id += random.choice(code)
+                self.account_dict = {self.client_id:self.bank_accounts[0]}
+                with open(account_path, "w") as fw:
+                    yaml.dump(self.account_dict, fw)
+            else:
+                self.add_bank_account(balance)  
+                self.client_id = client_id
+                self.account_dict = {self.client_id:self.bank_accounts[0]}
+                with open(account_path, "w") as fw:
+                    yaml.dump(self.account_dict, fw)
 
     def add_bank_account(self, amount, mod=False, account_id=None):
         b = BankAccount(amount)
@@ -114,8 +126,8 @@ class Client():
         else:
             raise ValueError("No such function")
 
-client1 = Client("Smetka.yaml", "1nd4hxwq")
-# client1.add_bank_account(2000, True)
-client2 = Client("Smetka.yaml", "f7w87dqm")
-# client2.add_bank_account(2000, True)
-client2.transfer(214742, client1, 128098, 500, "withdraw")
+client1 = Client("Smetka.yaml", "1520quyc", 1000)
+#client1.add_bank_account(2000, True)
+client2 = Client("Smetka.yaml", "fywqgeki", 5000)
+#client2.add_bank_account(2000, True)
+client2.transfer(724426, client1, 967445, 500, "withdraw")
