@@ -15,10 +15,7 @@ class BankAccount:
 
 class Client():
 
-    num_clients = 0
-
     def __init__(self, account_path, client_id=None, balance=None):
-        Client.num_clients += 1
         self.account_id = []
         self.bank_accounts = []
         self.num_accounts = 0
